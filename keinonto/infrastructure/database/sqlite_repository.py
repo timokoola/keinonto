@@ -11,7 +11,7 @@ from ...domain.interfaces.word_repository import IWordRepository
 from ...domain.value_objects.case import Case
 from ...domain.value_objects.number import Number
 from ...domain.value_objects.stem_type import StemType
-from .models import WordModel, WordStemModel
+from .models import StemModel, WordModel
 
 
 class SQLiteWordRepository(IWordRepository):
@@ -87,7 +87,10 @@ class SQLiteWordRepository(IWordRepository):
         if word_model is None:
             return {}
 
-        return {StemType(stem.stem_type): stem.stem for stem in word_model.stems}
+        stems = {}
+        for stem in word_model.stems:
+            stems[StemType(stem.stem_type)] = stem.stem
+        return stems
 
     async def save_word(self, word: Word) -> None:
         """Save a word to the repository."""
@@ -125,7 +128,7 @@ class SQLiteWordRepository(IWordRepository):
             existing_stem.stem = stem
         else:
             # Create new stem
-            stem_model = WordStemModel(
+            stem_model = StemModel(
                 word_id=word_model.id,
                 stem_type=stem_type.value,
                 stem=stem,

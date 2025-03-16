@@ -1,8 +1,8 @@
-"""SQLAlchemy models for word storage."""
+"""SQLAlchemy models for the word repository."""
 
-from typing import List, Optional
+from typing import Optional
 
-from sqlalchemy import ForeignKey, String, UniqueConstraint
+from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -11,39 +11,26 @@ class Base(DeclarativeBase):
 
 
 class WordModel(Base):
-    """Model for storing word information."""
+    """SQLAlchemy model for words."""
 
     __tablename__ = "words"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    base_form: Mapped[str] = mapped_column(String(50), unique=True)
+    base_form: Mapped[str] = mapped_column(String(50))
     declension_class: Mapped[int]
     gradation_type: Mapped[Optional[str]] = mapped_column(String(10))
 
-    # Relationship to stems
-    stems: Mapped[List["WordStemModel"]] = relationship(
-        "WordStemModel",
-        back_populates="word",
-        cascade="all, delete-orphan",
-    )
+    stems = relationship("StemModel", back_populates="word")
 
 
-class WordStemModel(Base):
-    """Model for storing word stems."""
+class StemModel(Base):
+    """SQLAlchemy model for word stems."""
 
-    __tablename__ = "word_stems"
+    __tablename__ = "stems"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     word_id: Mapped[int] = mapped_column(ForeignKey("words.id"))
     stem_type: Mapped[str] = mapped_column(String(20))
     stem: Mapped[str] = mapped_column(String(50))
 
-    # Relationship to base word
-    word: Mapped["WordModel"] = relationship(
-        "WordModel",
-        back_populates="stems",
-    )
-
-    __table_args__ = (
-        UniqueConstraint("word_id", "stem_type", name="uq_word_stem_type"),
-    )
+    word = relationship("WordModel", back_populates="stems")
