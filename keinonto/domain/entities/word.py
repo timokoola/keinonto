@@ -1,21 +1,36 @@
-"""
-Word entity representing a Finnish word and its properties.
-"""
+"""Word entity module."""
 
-from typing import Optional
+from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
-from ..value_objects.case import Case
-from ..value_objects.number import Number
+from ..value_objects.stem_type import StemType
+
+
+class WordStem(BaseModel):
+    """Word stem model."""
+
+    stem_type: StemType
+    value: str
 
 
 class Word(BaseModel):
-    """A Finnish word with its base form and properties."""
-    
-    base_form: str = Field(..., description="The dictionary form (nominative singular)")
-    declension_class: int = Field(..., ge=1, le=51, description="Noun declension class (1-51)")
-    gradation_type: Optional[str] = Field(None, description="Consonant gradation pattern if applicable")
-    
+    """Word model."""
+
+    base_form: str
+    declension_class: int = Field(
+        ...,
+        ge=1,
+        le=51,
+        description="Noun declension class (1-51)",
+    )
+    gradation_type: Optional[str] = Field(
+        None,
+        description="Consonant gradation pattern if applicable",
+    )
+    stems: List[WordStem] = []
+
     class Config:
         """Pydantic model configuration."""
-        frozen = True  # Make instances immutable 
+
+        frozen = True  # Make instances immutable

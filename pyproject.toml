@@ -29,6 +29,8 @@ classifiers = [
 dependencies = [
     "pydantic>=2.0.0",
     "typing-extensions>=4.0.0",
+    "sqlalchemy>=2.0.0",
+    "aiosqlite>=0.19.0",
 ]
 
 [project.optional-dependencies]
@@ -60,4 +62,4 @@ disallow_untyped_defs = true
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-ra -q --cov=keinonto"
-testpaths = ["tests"] 
+testpaths = ["tests"]
