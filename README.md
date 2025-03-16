@@ -19,6 +19,7 @@ The library handles:
 - Generate correct Finnish word forms based on base form and target case
 - Efficient and minimal database footprint
 - Type-safe API design
+- Command-line interface for quick testing and word management
 - Extensible architecture for future additions (verbs, possessive forms, etc.)
 - Comprehensive test suite using multiple word lists (Keinonto set, Kotus)
 
@@ -61,6 +62,8 @@ brew install libvoikko
 
 ## Usage
 
+### Python API
+
 ```python
 from keinonto import WordGenerator
 
@@ -78,6 +81,47 @@ print(result)  # Output: sanoissa
 # Get all possible forms for a word
 forms = generator.get_all_forms("sana")
 ```
+
+### Command Line Interface
+
+The library includes a CLI for quick testing and word management:
+
+```bash
+# Show available commands
+python -m keinonto.cli --help
+
+# Add a word with its forms from a JSON file
+python -m keinonto.cli add-forms talo 1 forms.json
+
+# Add a stem for a word
+python -m keinonto.cli add-stem talo strong taloi
+
+# Get information about a word
+python -m keinonto.cli info talo
+
+# Generate a specific form of a word
+python -m keinonto.cli gen talo nominative
+```
+
+Example forms.json format:
+```json
+{
+    "nominative_singular": "talo",
+    "genitive_singular": "talon",
+    "partitive_singular": "taloa",
+    "nominative_plural": "talot",
+    "inessive_singular": "talossa",
+    "illative_singular": "taloon"
+}
+```
+
+Required forms for word addition:
+- nominative_singular (base form)
+- genitive_singular (for weak stem)
+- partitive_singular (for special stems)
+- nominative_plural (for plural stem)
+- inessive_singular (for locative cases)
+- illative_singular (for special illative handling)
 
 ## Project Structure
 
@@ -138,7 +182,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Extended word list coverage
 - Performance optimizations
 - Web API service
+- Enhanced CLI functionality
+  - Batch word import/export
+  - Interactive word form editing
+  - Form validation improvements
 
 ## Contact
 
-For questions and support, please open an issue in the GitHub repository or contact the maintainers directly. 
+For questions and support, please open an issue in the GitHub repository or contact the maintainers directly.
