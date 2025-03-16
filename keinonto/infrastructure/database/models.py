@@ -34,7 +34,10 @@ class StemModel(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     word_id: Mapped[int] = mapped_column(ForeignKey("words.id"))
-    stem_type: Mapped[str] = mapped_column(String(20))
+    stem_type: Mapped[str] = mapped_column(
+        String(20),
+        doc="Type of stem (e.g., 'strong', 'weak', 'plural')",
+    )
     stem: Mapped[str] = mapped_column(String(50))
 
     word: Mapped["WordModel"] = relationship(
