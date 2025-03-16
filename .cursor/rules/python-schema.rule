@@ -1,0 +1,30 @@
+# Python Schema-Driven Development Rules
+# Applies to: *.py
+
+This project follows schema-driven development practices using Pydantic.
+
+## Data Schemas
+- All data structures must be defined using Pydantic models
+- Place schema definitions in the `schemas/` directory
+- Include type hints and field validations
+- Use descriptive field names with docstrings
+
+## Code Organization
+- Follow the project structure:
+  ```
+  project_root/
+  ├── schemas/          # Pydantic models
+  ├── api/              # API endpoints
+  ├── services/         # Business logic
+  ├── repositories/     # Data access
+  ├── tests/           # Test suites
+  └── utils/           # Helpers
+  ```
+
+## Testing
+- Maintain test coverage above 80%
+- Use pytest for testing
+- Include schema validation tests
+- Write integration tests
+
+@file ../PROJECT_RULES.md 

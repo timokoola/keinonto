@@ -1,0 +1,87 @@
+# Project-Specific Rules
+# Applies to: *
+
+## Project Context
+
+This project is a library for generating Finnish word forms from base forms to declinated forms. For instance given 'sana' and target 'plural, inessive' the result will be 'sanoissa'. 
+The Finnish language has complicated rules for this. There are 51 noun declination classes and several consonant gradation classes, the proper class and word stem needs to be known to produce proper outcome. 
+For this extensive backing database is needed. In essence the mission is to keep this database as small as possible. Database can be literal database or for instance a jsonl file. The installation scripts need to be able to handle the relatively large backing database.
+
+The actual facade of the library should be small and hide the complexitities inside the code. It is very important to keep types clear and extensible. 
+While we start with nouns and no special additions (like Finnish possessive forms) or verbs, the types need to be able to support those in the future with minimal changes in the API facade level
+
+We utilize several testing tools in covering the library and put testing in Docker containers to be able to use Voikko library and word lists for testing (one Keinonto set and several from Finnish languages' center Kotus)
+
+
+This is a Python-based project that follows schema-driven development principles with a focus on:
+- Clean architecture principles
+- Domain-driven design
+- Type safety and validation
+- Automated testing and CI/CD
+
+## Naming Conventions
+- Use snake_case for Python files, functions, and variables
+- Use PascalCase for class names
+- Prefix interface classes with 'I' (e.g., IUserRepository)
+- Suffix implementation classes appropriately (e.g., SQLUserRepository)
+- Test files should be prefixed with 'test_'
+
+## Project Structure Extensions
+```
+project_root/
+├── domain/           # Domain models and business rules
+│   ├── entities/     # Core business entities
+│   ├── value_objects/# Value objects
+│   └── interfaces/   # Abstract interfaces
+├── infrastructure/   # External implementations
+│   ├── database/     # Database configurations
+│   ├── external/     # External service integrations
+│   └── logging/      # Logging configurations
+└── presentation/     # API and UI layers
+    ├── api/          # API endpoints
+    ├── dto/          # Data transfer objects
+    └── middlewares/  # Request/Response middlewares
+```
+
+## Development Practices
+- Follow SOLID principles
+- Use dependency injection
+- Implement repository pattern for data access
+- Use factory pattern for complex object creation
+- Keep functions under 20 lines where possible
+- Maximum cyclomatic complexity: 8
+
+## Error Handling Extensions
+- Use custom exception hierarchy
+- Log all errors with correlation IDs
+- Include stack traces in development
+- Return user-friendly messages in production
+
+## Performance Guidelines
+- Use async/await for I/O operations
+- Implement caching for expensive operations
+- Use connection pooling for databases
+- Implement rate limiting for APIs
+- Monitor memory usage
+
+## Documentation Extensions
+- Include architecture decision records (ADRs)
+- Document all environment variables
+- Maintain API documentation with OpenAPI
+- Include setup instructions for new developers
+
+## Security Extensions
+- Implement role-based access control
+- Use JWT for authentication
+- Hash sensitive data
+- Regular security audits
+- Follow OWASP guidelines
+
+## Quality Assurance
+- All features must have acceptance criteria
+- Required code coverage: 90%
+- Performance testing for critical paths
+- Regular vulnerability scanning
+- Automated integration tests
+
+@file ../PROJECT_RULES.md 

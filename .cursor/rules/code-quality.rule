@@ -1,0 +1,28 @@
+# Code Quality Standards
+# Applies to: *.py
+
+## Formatting and Linting
+- Use Black for code formatting (line length: 88)
+- Apply Flake8 for linting
+- Sort imports with isort
+- Maintain pylint score above 9.0
+
+## Documentation
+- Use Google-style docstrings
+- Document all public functions and classes
+- Keep README up-to-date
+- Include usage examples
+
+## Error Handling
+- Define custom exception classes
+- Implement proper logging
+- Include context in error responses
+- Handle edge cases explicitly
+
+## Security
+- No hardcoded secrets
+- Use environment variables
+- Sanitize inputs
+- Regular dependency updates
+
+@file ../PROJECT_RULES.md 

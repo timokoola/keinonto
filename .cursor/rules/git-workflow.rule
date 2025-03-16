@@ -1,0 +1,35 @@
+# Git Workflow Standards
+# Applies to: *
+
+## Branch Strategy
+- main: Production code
+- develop: Integration branch
+- feature/*: New features
+- bugfix/*: Bug fixes
+- release/*: Release prep
+
+## Commit Messages
+Format:
+```
+<type>(<scope>): <description>
+
+[optional body]
+[optional footer]
+```
+
+Types:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation
+- style: Formatting
+- refactor: Code restructuring
+- test: Testing
+- chore: Maintenance
+
+## Review Process
+- Code review required
+- Tests must pass
+- Coverage requirements met
+- Documentation updated
+
+@file ../PROJECT_RULES.md 
