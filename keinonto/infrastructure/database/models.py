@@ -1,8 +1,8 @@
 """Database models for SQLite."""
 
-from typing import Optional
+# pylint: disable=too-few-public-methods,import-error
+from typing import List, Optional
 
-# pylint: disable=import-error,too-few-public-methods
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -21,7 +21,10 @@ class WordModel(Base):
     declension_class: Mapped[int]
     gradation_type: Mapped[Optional[str]] = mapped_column(String(10))
 
-    stems = relationship("StemModel", back_populates="word")
+    stems: Mapped[List["StemModel"]] = relationship(
+        "StemModel",
+        back_populates="word",
+    )
 
 
 class StemModel(Base):
@@ -34,4 +37,7 @@ class StemModel(Base):
     stem_type: Mapped[str] = mapped_column(String(20))
     stem: Mapped[str] = mapped_column(String(50))
 
-    word = relationship("WordModel", back_populates="stems")
+    word: Mapped["WordModel"] = relationship(
+        "WordModel",
+        back_populates="stems",
+    )
