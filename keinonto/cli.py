@@ -350,9 +350,8 @@ def validate_form_ending(
         raise EndingError(msg)
 
     if case == Case.COMITATIVE and number == Number.PLURAL:
-        has_possessive = any(
-            form.endswith(f"{ending}en") for ending in ["i", "e"]
-        )
+        endings = ["i", "e"]
+        has_possessive = any(form.endswith(f"{e}en") for e in endings)
         if not has_possessive:
             msg = (
                 f"Invalid comitative form: {form}\n"
@@ -496,10 +495,8 @@ def load_forms(file_path: str) -> Dict[str, str]:
 
 def create_parser() -> argparse.ArgumentParser:
     """Create the argument parser for the CLI."""
-    parser = argparse.ArgumentParser(
-        description="CLI for testing word form generation"
-    )
-
+    desc = "CLI for testing word form generation"
+    parser = argparse.ArgumentParser(description=desc)
     subparsers = parser.add_subparsers(dest="command")
 
     # Add word with forms
