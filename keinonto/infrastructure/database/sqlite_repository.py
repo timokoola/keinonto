@@ -2,6 +2,7 @@
 
 from typing import Dict, List, Optional, Tuple
 
+# pylint: disable=import-error
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload

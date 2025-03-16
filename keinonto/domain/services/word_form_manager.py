@@ -95,3 +95,19 @@ class WordFormManager:
         # Add more cases and rules as needed
         msg = f"Form generation not implemented for {case} {number}"
         raise ValueError(msg)
+
+    async def save_stem(
+        self,
+        word: Word,  # pylint: disable=unused-argument
+        stem_type: StemType,
+        stem: str,
+    ) -> None:
+        """Save a stem for a word.
+
+        Args:
+            word: The word to save the stem for
+            stem_type: Type of the stem
+            stem: The stem value
+        """
+        # Not implemented in base class
+        raise NotImplementedError("save_stem not implemented")

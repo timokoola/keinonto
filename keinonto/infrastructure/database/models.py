@@ -1,7 +1,8 @@
-"""SQLAlchemy models for the word repository."""
+"""Database models for SQLite."""
 
 from typing import Optional
 
+# pylint: disable=import-error,too-few-public-methods
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 

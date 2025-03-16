@@ -2,11 +2,12 @@
 
 from typing import Dict, Optional, Tuple
 
-from keinonto.domain.value_objects.case import Case
-from keinonto.domain.value_objects.number import Number
-from keinonto.domain.value_objects.stem_type import StemType
+from ..value_objects.case import Case
+from ..value_objects.number import Number
+from ..value_objects.stem_type import StemType
 
 
+# pylint: disable=too-few-public-methods
 class WordForm:
     """Value object for a word form."""
 
@@ -31,6 +32,7 @@ class WordForm:
         self.used_stem = used_stem
 
 
+# pylint: disable=too-few-public-methods
 class WordDeclension:
     """Value object for a word declension."""
 

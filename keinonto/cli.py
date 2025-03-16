@@ -350,7 +350,9 @@ def validate_form_ending(
         raise EndingError(msg)
 
     if case == Case.COMITATIVE and number == Number.PLURAL:
-        has_possessive = any(form.endswith(f"{ending}en") for ending in ["i", "e"])
+        has_possessive = any(
+            form.endswith(f"{ending}en") for ending in ["i", "e"]
+        )
         if not has_possessive:
             msg = (
                 f"Invalid comitative form: {form}\n"
@@ -363,10 +365,11 @@ def parse_case_number(case_str: str) -> Tuple[Case, Number]:
     """Parse case and number from a string.
 
     Args:
-        case_str: String in format "case_number" (e.g., "nominative_singular")
+        case_str: String in format "case_number"
+        Example: "nominative_singular"
 
     Returns:
-        Tuple[Case, Number]: Parsed case and number
+        Tuple of parsed case and number
 
     Raises:
         CaseNumberFormatError: If case/number format is invalid
@@ -397,8 +400,8 @@ def validate_form(
 
     Raises:
         FormValidationError: If validation fails
-        GradationError: If gradation fails
-        VowelHarmonyError: If vowel harmony fails
+        GradationError: If gradation pattern validation fails
+        VowelHarmonyError: If vowel harmony validation fails
         CaseNumberFormatError: If case/number format is invalid
         EndingError: If form ending is invalid
     """
@@ -420,7 +423,17 @@ def validate_form(
 
 
 def stem_type_arg(value: str) -> str:
-    """Convert stem type argument to proper format."""
+    """Convert stem type argument to proper format.
+
+    Args:
+        value: The stem type value to convert
+
+    Returns:
+        The normalized stem type value
+
+    Raises:
+        ArgumentTypeError: If the value is not a valid stem type
+    """
     normalized = value.lower()
     valid_types = [t.value for t in StemType]
     if normalized not in valid_types:
@@ -483,7 +496,9 @@ def load_forms(file_path: str) -> Dict[str, str]:
 
 def create_parser() -> argparse.ArgumentParser:
     """Create the argument parser for the CLI."""
-    parser = argparse.ArgumentParser(description="CLI for testing word form generation")
+    parser = argparse.ArgumentParser(
+        description="CLI for testing word form generation"
+    )
 
     subparsers = parser.add_subparsers(dest="command")
 
@@ -600,10 +615,16 @@ async def generate_form(
     base_form: str,
     case: str,
 ) -> None:
-    """Generate a specific form of a word."""
+    """Generate a specific form of a word.
+
+    Args:
+        generator: Word form generator instance
+        base_form: Base form of the word
+        case: Case to generate
+    """
     form = await generator.generate(base_form, Case(case))
     if not form:
-        msg = f"Could not generate {case} form for '{base_form}'"
+        msg = f"Could not generate {case} form " f"for '{base_form}'"
         raise CLIError(msg)
     print(form)
 
@@ -649,7 +670,10 @@ async def main() -> NoReturn:
         sys.exit(2)
     except Exception as e:  # pylint: disable=broad-except
         err = f"{e.__class__.__name__}: {str(e)}"
-        print(f"Unexpected error: {err}", file=sys.stderr)
+        print(
+            f"Unexpected error: {err}",
+            file=sys.stderr,
+        )
         sys.exit(2)
 
 
