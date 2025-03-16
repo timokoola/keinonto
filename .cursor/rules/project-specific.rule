@@ -12,6 +12,7 @@ While we start with nouns and no special additions (like Finnish possessive form
 
 We utilize several testing tools in covering the library and put testing in Docker containers to be able to use Voikko library and word lists for testing (one Keinonto set and several from Finnish languages' center Kotus)
 
+While we aim for cleanliness and accuracy of the end results, the code generating the results can follow paths that make them fast and reliable, not necessarily considering linguistic perfectness. There is essential complexity that can't be avoided in the code level but that is hidden from the user
 
 This is a Python-based project that follows schema-driven development principles with a focus on:
 - Clean architecture principles
