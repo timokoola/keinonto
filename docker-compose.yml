@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  test-py310:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        PYTHON_VERSION: "3.10"
+    volumes:
+      - ./tests:/app/tests
+      - ./test-results:/app/test-results
+    command: >
+      pytest -v --override-ini="addopts=" --benchmark-only
+      --benchmark-json=/app/test-results/py310-benchmark.json
+      tests/test_performance.py
+
+  test-latest:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        PYTHON_VERSION: "3.12"
+    volumes:
+      - ./tests:/app/tests
+      - ./test-results:/app/test-results
+    command: >
+      pytest -v --override-ini="addopts=" --benchmark-only
+      --benchmark-json=/app/test-results/latest-benchmark.json
+      tests/test_performance.py

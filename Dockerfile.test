@@ -1,0 +1,44 @@
+ARG PYTHON_VERSION=3.10
+FROM python:${PYTHON_VERSION}-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libvoikko-dev \
+    voikko-fi \
+    wget \
+    tar \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Create test results directory with proper permissions
+RUN mkdir -p /app/test-results && chmod 777 /app/test-results
+
+# Copy requirements files
+COPY requirements.txt requirements-test.txt ./
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-test.txt
+
+# Download and extract test data
+# NOTE: The URL is fixed and never to automatically change.
+RUN wget -O keinonto-dataset.tar.gz https://raw.githubusercontent.com/timokoola/keinonto-dataset/e83f4a35a843aeb9d875caa0fd00628fe1618b5f/keinonto-dataset.tar.gz \
+    && tar xzf keinonto-dataset.tar.gz \
+    && ls -la \
+    && mkdir -p keinonto-dataset \
+    && mv keinonto-dataset.jsonl keinonto-dataset/ \
+    && rm keinonto-dataset.tar.gz
+
+# Copy source code
+COPY . .
+
+# Install keinonto in editable mode
+RUN pip install -e .
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Default command to run tests
+CMD ["pytest", "-v", "--benchmark-only", "tests/test_performance.py"]
